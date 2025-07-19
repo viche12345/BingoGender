@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gender Reveal Bingo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="main-view" class="main-container">
+        <!-- Header with current call -->
+        <header class="header">
+            <h1 class="title">GENDER REVEAL BINGO</h1>
+            <div class="current-call">
+                <div class="current-ball" id="current-ball">
+                    <span class="ball-letter" id="ball-letter"></span>
+                    <span class="ball-number" id="ball-number">Ready</span>
+                </div>
+            </div>
+            <button id="draw-button" class="draw-btn">DRAW BALL</button>
+        </header>
+
+        <!-- Main bingo board grid -->
+        <div class="bingo-master-board">
+            <div class="board-grid" id="board-grid">
+                <!-- Grid will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Controls and info -->
+        <div class="bottom-section">
+            <div class="called-numbers-section">
+                <h3>Called Numbers</h3>
+                <div class="called-numbers-grid" id="called-numbers-grid"></div>
+            </div>
+        </div>
+
+        <!-- Dev Mode Section - Only shows when ?dev=true -->
+        <div id="dev-section" class="dev-section" style="display: none;">
+            <div class="dev-content">
+                <div class="cards-grid">
+                    <div class="card-container">
+                        <h3>Boy Card 1</h3>
+                        <div class="bingo-card" id="boy-card-1"></div>
+                    </div>
+                    <div class="card-container">
+                        <h3>Boy Card 2</h3>
+                        <div class="bingo-card" id="boy-card-2"></div>
+                    </div>
+                    <div class="card-container">
+                        <h3>Girl Card 1 (Winner)</h3>
+                        <div class="bingo-card" id="girl-card-1"></div>
+                    </div>
+                    <div class="card-container">
+                        <h3>Girl Card 2</h3>
+                        <div class="bingo-card" id="girl-card-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="winner-announcement" id="winner-announcement" style="display: none;">
+            <h2>🎉 BINGO! 🎉</h2>
+            <p id="winner-text"></p>
+            <p class="reveal-text">IT'S A GIRL! 💖</p>
+        </div>
+    </div>
+
+    <!-- Print Views -->
+    <div id="print-view" class="print-container" style="display: none;">
+        <div class="print-page" id="print-boy-1">
+            <h2>BOY BINGO CARD #1</h2>
+            <div class="print-bingo-card" id="print-boy-card-1"></div>
+        </div>
+        <div class="print-page" id="print-boy-2">
+            <h2>BOY BINGO CARD #2</h2>
+            <div class="print-bingo-card" id="print-boy-card-2"></div>
+        </div>
+        <div class="print-page" id="print-girl-1">
+            <h2>GIRL BINGO CARD #1</h2>
+            <div class="print-bingo-card" id="print-girl-card-1"></div>
+        </div>
+        <div class="print-page" id="print-girl-2">
+            <h2>GIRL BINGO CARD #2</h2>
+            <div class="print-bingo-card" id="print-girl-card-2"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
