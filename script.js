@@ -1,5 +1,5 @@
 // Bingo Cards - Hardcoded (2 Boy, 2 Girl)
-// Girl Card 1 will win with top row: B5, I16, N31, G46, O61
+// Girl Card 1 will win with second row: B9, I27, N34, G54, O72
 const bingoCards = {
     boy1: {
         B: [1, 7, 12, 15, 3],
@@ -32,12 +32,12 @@ const bingoCards = {
 };
 
 // HARDCODED RIGGED SEQUENCE - EXTREMELY CAREFULLY VERIFIED
-// Girl Card 1 will win with top row: B5, I16, N31, G46, O61
+// Girl Card 1 will win with second row: B9, I27, N34, G54, O72
 // 
 // CARD ANALYSIS (to prevent wrong wins):
 // Boy1: B[1,7,12,15,3], I[18,22,28,30,24], N[33,35,FREE,44,38], G[47,52,58,60,55], O[62,67,73,75,70]
 // Boy2: B[2,8,13,14,6], I[17,23,29,25,19], N[32,36,FREE,45,39], G[48,53,59,56,51], O[63,71,74,69,65]
-// Girl1: B[5,9,4,10,11], I[16,27,20,26,21], N[31,34,FREE,37,42], G[46,54,57,50,49], O[61,72,68,66,64] (WINNER - top row)
+// Girl1: B[5,9,4,10,11], I[16,27,20,26,21], N[31,34,FREE,37,42], G[46,54,57,50,49], O[61,72,68,66,64] (WINNER - second row)
 // Girl2: B[15,12,7,3,1], I[30,18,25,22,24], N[38,44,FREE,35,40], G[60,55,52,58,47], O[75,70,67,73,62]
 //
 // STRATEGY: Give each wrong card maximum 2 numbers from any winning pattern to create excitement but prevent wins
@@ -50,28 +50,28 @@ const riggedSequence = [
     'B6',    // Boy2 only - safe
     'O62',   // NOT on any card - completely safe
     'B2',    // Boy2 only - safe
-    'G46',   // Girl1 WINNING #1 (top row)
+    'G54',   // Girl1 WINNING #1 (second row)
     'N32',   // Boy2 only - safe
     'O75',   // Girl2 only - safe
-    'B5',    // Girl1 WINNING #2 (top row)
+    'B9',    // Girl1 WINNING #2 (second row)
     'I18',   // Girl2 only - safe
     'G55',   // Girl2 only - safe
     'O63',   // Boy2 only - safe
     'N36',   // Boy2 only - safe
-    'I16',   // Girl1 WINNING #3 (top row)
+    'I27',   // Girl1 WINNING #3 (second row)
     'G47',   // Girl2 only - safe
     'G51',   // Boy2 only - safe
-    'N34',   // Girl1 only - safe
+    'B5',    // Girl1 only - safe
     'O71',   // Boy2 only - safe
     'B3',    // Girl2 only - safe
     'I21',   // Girl1 only - safe
     'O69',   // Boy2 only - safe
     'I22',   // Girl2 only - safe
     'G49',   // Girl1 only - safe
-    'N31',   // Girl1 WINNING #4 (top row)
+    'N34',   // Girl1 WINNING #4 (second row)
     'G52',   // Girl2 only - safe
     'O64',   // Girl1 only - safe
-    'O61'    // Girl1 WINNING #5 (top row) - GIRL1 WINS!
+    'O72'    // Girl1 WINNING #5 (second row) - GIRL1 WINS!
 ];
 
 // Game state

@@ -4,7 +4,7 @@
 A rigged bingo game for a gender reveal party where Girl Card 1 is guaranteed to win, revealing "IT'S A GIRL!" Built with HTML, CSS, and JavaScript for browser display on TV.
 
 ## Working Configuration
-- **Girl Card 1 wins with top row:** B5, I16, N31, G46, O61
+- **Girl Card 1 wins with second row:** B9, I27, N34, G54, O72
 - **Rigged sequence** that prevents wrong card wins while creating excitement
 - **Cards are carefully designed** to avoid conflicts with the rigged sequence
 - **Ultra-safe strategy:** Wrong cards get maximum 2 numbers from any winning pattern
@@ -55,7 +55,7 @@ The breakthrough solution uses an "ultra-safe sequence strategy":
 - **Animations:** Smooth transitions and celebration effects
 
 ## Tested & Verified
-- ✅ Girl Card 1 always wins with top row
+- ✅ Girl Card 1 always wins with second row
 - ✅ No other card can accidentally win
 - ✅ Exciting gameplay with close calls
 - ✅ Professional casino appearance
