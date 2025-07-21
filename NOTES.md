@@ -5,9 +5,10 @@ A rigged bingo game for a gender reveal party where Girl Card 1 is guaranteed to
 
 ## Working Configuration
 - **Girl Card 1 wins with top row:** B5, I16, N31, G46, O61
-- **23-number rigged sequence** that prevents wrong card wins
+- **Rigged sequence** that prevents wrong card wins while creating excitement
 - **Cards are carefully designed** to avoid conflicts with the rigged sequence
 - **Ultra-safe strategy:** Wrong cards get maximum 2 numbers from any winning pattern
+- **Enhanced excitement:** Girl Card 1 gets 13 numbers total, Boy Card 2 gets 12 numbers total
 
 ## File Structure
 - `index.html`: Main app structure with casino-style layout
@@ -20,8 +21,9 @@ A rigged bingo game for a gender reveal party where Girl Card 1 is guaranteed to
 - **Print mode:** Open `index.html?print=true` (printer-friendly cards for guests)
 
 ## Key Features
-- **Rigged sequence:** 23 carefully chosen numbers that look random but guarantee Girl Card 1 wins
+- **Rigged sequence:** Around 30 carefully chosen numbers that look random but guarantee Girl Card 1 wins
 - **Win-checking:** Prevents accidental wrong card wins through careful number selection
+- **Enhanced excitement:** Additional numbers for Girl Card 1 and Boy Card 2 to keep players engaged
 - **Casino aesthetics:** TV-friendly display with professional bingo hall appearance
 - **Dev mode:** Verify rigging works correctly by watching all cards get marked
 - **Print cards:** Generate 4 cards (2 boy, 2 girl) for distribution to guests
@@ -41,8 +43,9 @@ A rigged bingo game for a gender reveal party where Girl Card 1 is guaranteed to
 The breakthrough solution uses an "ultra-safe sequence strategy":
 1. Wrong cards get maximum 2 numbers from any row/column/diagonal
 2. Girl Card 1's winning numbers are interspersed throughout sequence
-3. Creates maximum excitement while guaranteeing correct winner
-4. 23 total numbers provides perfect game pacing
+3. Additional Girl Card 1 and Boy Card 2 numbers create excitement without risk
+4. Around 30 total numbers provides extended, engaging game pacing
+5. All added numbers are completely safe (don't appear on other cards)
 
 ## Color Scheme & Style
 - **Background:** Deep blue gradients (casino night theme)
