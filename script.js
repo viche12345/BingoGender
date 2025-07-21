@@ -79,7 +79,9 @@ let gameState = {
     calledNumbers: [],
     currentIndex: 0,
     gameEnded: false,
-    winnerFound: false
+    winnerFound: false,
+    bingoDetected: false,
+    winningCard: null
 };
 
 // Initialize the game
@@ -156,6 +158,15 @@ function showView(view) {
 
 // Draw the next number from rigged sequence
 function drawNumber() {
+    // If bingo was detected on previous draw, show winner now
+    if (gameState.bingoDetected && !gameState.winnerFound) {
+        showWinner(gameState.winningCard);
+        gameState.gameEnded = true;
+        gameState.winnerFound = true;
+        document.getElementById('draw-button').disabled = true;
+        return;
+    }
+
     if (gameState.gameEnded || gameState.currentIndex >= riggedSequence.length) {
         return;
     }
@@ -187,11 +198,6 @@ function drawNumber() {
 
     // Check for winner after each number
     checkForWinner();
-
-    // Disable button if game ended
-    if (gameState.gameEnded) {
-        document.getElementById('draw-button').disabled = true;
-    }
 }
 
 // Update the called numbers display
@@ -211,10 +217,10 @@ function updateCalledNumbersList() {
 function checkForWinner() {
     Object.keys(bingoCards).forEach(cardKey => {
         if (checkCardForWin(bingoCards[cardKey], cardKey)) {
-            if (cardKey === 'girl1') {
-                showWinner(cardKey);
-                gameState.gameEnded = true;
-                gameState.winnerFound = true;
+            if (cardKey === 'girl1' && !gameState.bingoDetected) {
+                // Detect bingo but don't show winner yet
+                gameState.bingoDetected = true;
+                gameState.winningCard = cardKey;
             }
         }
     });
