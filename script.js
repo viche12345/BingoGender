@@ -99,27 +99,26 @@ function createMainBoard() {
     // Clear any existing content
     boardGrid.innerHTML = '';
 
-    // Create column headers first
+    // Create rows for each letter (5 rows, 15 columns each)
     columns.forEach(letter => {
+        // Create row header for each letter
         const header = document.createElement('div');
-        header.className = 'column-header';
+        header.className = 'row-header';
         header.textContent = letter;
         boardGrid.appendChild(header);
-    });
 
-    // Create rows of numbers (15 rows, 5 columns)
-    for (let row = 0; row < 15; row++) {
-        columns.forEach(letter => {
-            const [start] = ranges[letter];
-            const number = start + row;
+        // Create all 15 numbers for this letter's row
+        const [start] = ranges[letter];
+        for (let i = 0; i < 15; i++) {
+            const number = start + i;
             
             const numberCell = document.createElement('div');
             numberCell.className = 'number-cell';
             numberCell.textContent = number;
             numberCell.id = `cell-${letter}${number}`;
             boardGrid.appendChild(numberCell);
-        });
-    }
+        }
+    });
 }
 
 // Setup event listeners

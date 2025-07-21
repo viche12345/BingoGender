@@ -110,23 +110,22 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 20px 60px;
 }
 
 .board-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: auto repeat(15, 1fr);
     gap: 3px;
     background: linear-gradient(45deg, #2c3e50, #34495e);
-    padding: 30px;
+    padding: 40px;
     border-radius: 20px;
     border: 4px solid #ffd700;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    max-width: 800px;
     width: 100%;
 }
 
-.column-header {
+.row-header {
     background: linear-gradient(45deg, #e74c3c, #c0392b);
     color: white;
     font-size: 3rem;
@@ -471,7 +470,7 @@ body {
         font-size: 1.5rem;
     }
     
-    .column-header {
+    .row-header {
         font-size: 2rem;
         padding: 15px;
     }
