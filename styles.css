@@ -165,8 +165,8 @@ body {
     z-index: 1;
 }
 
-/* Bottom Section */
-.bottom-section {
+/* Called Numbers Section */
+.called-numbers-section {
     background: linear-gradient(45deg, #2c3e50, #34495e);
     padding: 20px;
     border-radius: 15px;
