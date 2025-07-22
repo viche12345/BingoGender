@@ -84,12 +84,89 @@ let gameState = {
     winningCard: null
 };
 
+// LocalStorage key
+const STORAGE_KEY = 'bingoGameState';
+
+// Save game state to localStorage
+function saveGameState() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState));
+    } catch (error) {
+        console.warn('Failed to save game state:', error);
+    }
+}
+
+// Load game state from localStorage
+function loadGameState() {
+    try {
+        const savedState = localStorage.getItem(STORAGE_KEY);
+        if (savedState) {
+            const parsedState = JSON.parse(savedState);
+            // Merge saved state with current state
+            Object.assign(gameState, parsedState);
+            return true;
+        }
+    } catch (error) {
+        console.warn('Failed to load game state:', error);
+    }
+    return false;
+}
+
+// Reset game to initial state
+function resetGame() {
+    // Clear localStorage
+    try {
+        localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+        console.warn('Failed to clear saved game state:', error);
+    }
+    
+    // Reset game state
+    gameState = {
+        calledNumbers: [],
+        currentIndex: 0,
+        gameEnded: false,
+        winnerFound: false,
+        bingoDetected: false,
+        winningCard: null
+    };
+    
+    // Reset UI
+    document.getElementById('ball-number').textContent = 'Ready';
+    document.getElementById('ball-letter').textContent = '';
+    document.getElementById('draw-button').disabled = false;
+    document.getElementById('winner-announcement').style.display = 'none';
+    
+    // Clear called numbers display
+    document.getElementById('called-numbers-grid').innerHTML = '';
+    
+    // Reset main board
+    document.querySelectorAll('.number-cell.called').forEach(cell => {
+        cell.classList.remove('called');
+    });
+    
+    // Reset dev mode if active
+    if (document.getElementById('dev-section').style.display === 'block') {
+        document.querySelectorAll('.card-cell.marked').forEach(cell => {
+            // Only remove marked class if it's not the FREE space
+            if (cell.textContent !== 'FREE') {
+                cell.classList.remove('marked');
+            }
+        });
+    }
+}
+
 // Initialize the game
 function initGame() {
     createMainBoard();
     setupEventListeners();
     checkDevMode();
     initializePrintViews();
+    
+    // Load saved game state if available
+    if (loadGameState()) {
+        restoreGameUI();
+    }
 }
 
 // Create the main bingo board display (grid layout like reference)
@@ -129,10 +206,52 @@ function createMainBoard() {
     });
 }
 
+// Restore UI based on loaded game state
+function restoreGameUI() {
+    // Update current ball display
+    if (gameState.calledNumbers.length > 0) {
+        const lastCall = gameState.calledNumbers[gameState.calledNumbers.length - 1];
+        const letter = lastCall[0];
+        const number = lastCall.substring(1);
+        document.getElementById('ball-letter').textContent = letter;
+        document.getElementById('ball-number').textContent = number;
+    }
+    
+    // Update called numbers display
+    updateCalledNumbersList();
+    
+    // Mark numbers on main board
+    gameState.calledNumbers.forEach(numberCall => {
+        const cell = document.getElementById(`cell-${numberCall}`);
+        if (cell) {
+            cell.classList.add('called');
+        }
+    });
+    
+    // Update dev mode if active
+    if (document.getElementById('dev-section').style.display === 'block') {
+        updateDevMode();
+    }
+    
+    // Handle game end states
+    if (gameState.gameEnded) {
+        document.getElementById('draw-button').disabled = true;
+    }
+    
+    if (gameState.winnerFound) {
+        document.getElementById('winner-announcement').style.display = 'flex';
+    }
+}
+
 // Setup event listeners
 function setupEventListeners() {
     const drawButton = document.getElementById('draw-button');
+    const resetButton = document.getElementById('reset-button');
+    const closeWinnerButton = document.getElementById('close-winner');
+    
     drawButton.addEventListener('click', drawNumber);
+    resetButton.addEventListener('click', resetGame);
+    closeWinnerButton.addEventListener('click', closeWinnerAnnouncement);
 }
 
 // Check if dev mode should be enabled
@@ -164,6 +283,7 @@ function drawNumber() {
         gameState.gameEnded = true;
         gameState.winnerFound = true;
         document.getElementById('draw-button').disabled = true;
+        saveGameState();
         return;
     }
 
@@ -177,6 +297,9 @@ function drawNumber() {
     
     gameState.calledNumbers.push(numberCall);
     gameState.currentIndex++;
+
+    // Save game state after each number draw
+    saveGameState();
 
     // Update current ball display
     document.getElementById('ball-number').textContent = number;
@@ -221,6 +344,7 @@ function checkForWinner() {
                 // Detect bingo but don't show winner yet
                 gameState.bingoDetected = true;
                 gameState.winningCard = cardKey;
+                saveGameState();
             }
         }
     });
@@ -287,6 +411,12 @@ function checkCardForWin(card, cardKey) {
 function showWinner(cardKey) {
     const winnerAnnouncement = document.getElementById('winner-announcement');
     winnerAnnouncement.style.display = 'flex';
+}
+
+// Close winner announcement
+function closeWinnerAnnouncement() {
+    const winnerAnnouncement = document.getElementById('winner-announcement');
+    winnerAnnouncement.style.display = 'none';
 }
 
 // Initialize dev mode
