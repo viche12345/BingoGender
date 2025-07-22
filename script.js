@@ -143,6 +143,7 @@ function resetGame() {
     // Reset main board
     document.querySelectorAll('.number-cell.called').forEach(cell => {
         cell.classList.remove('called');
+        cell.classList.remove('alternate');
     });
     
     // Reset dev mode if active
@@ -220,11 +221,15 @@ function restoreGameUI() {
     // Update called numbers display
     updateCalledNumbersList();
     
-    // Mark numbers on main board
-    gameState.calledNumbers.forEach(numberCall => {
+    // Mark numbers on main board with alternating colors
+    gameState.calledNumbers.forEach((numberCall, index) => {
         const cell = document.getElementById(`cell-${numberCall}`);
         if (cell) {
             cell.classList.add('called');
+            // Alternate colors based on call order (even/odd)
+            if (index % 2 === 1) {
+                cell.classList.add('alternate');
+            }
         }
     });
     
@@ -305,10 +310,14 @@ function drawNumber() {
     document.getElementById('ball-number').textContent = number;
     document.getElementById('ball-letter').textContent = letter;
 
-    // Mark number on main board
+    // Mark number on main board with alternating colors
     const cell = document.getElementById(`cell-${numberCall}`);
     if (cell) {
         cell.classList.add('called');
+        // Alternate colors based on call order (even/odd)
+        if ((gameState.currentIndex - 1) % 2 === 1) {
+            cell.classList.add('alternate');
+        }
     }
 
     // Update called numbers list
