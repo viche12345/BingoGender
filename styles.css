@@ -241,6 +241,34 @@ body {
     animation: celebration 2s ease-in-out;
 }
 
+.close-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 3px solid #ffd700;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    z-index: 1001;
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.close-btn:active {
+    transform: scale(0.95);
+}
+
 
 .winner-announcement h2 {
     font-size: 5rem;
