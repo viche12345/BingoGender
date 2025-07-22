@@ -286,16 +286,6 @@ function checkCardForWin(card, cardKey) {
 // Show winner announcement
 function showWinner(cardKey) {
     const winnerAnnouncement = document.getElementById('winner-announcement');
-    const winnerText = document.getElementById('winner-text');
-    
-    const cardNames = {
-        'boy1': 'Boy Card 1',
-        'boy2': 'Boy Card 2', 
-        'girl1': 'Girl Card 1',
-        'girl2': 'Girl Card 2'
-    };
-    
-    winnerText.textContent = `${cardNames[cardKey]} has BINGO!`;
     winnerAnnouncement.style.display = 'flex';
 }
 
