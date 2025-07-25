@@ -31,6 +31,67 @@ const bingoCards = {
     }
 };
 
+// 8-Card Bingo Cards - Hardcoded (4 Boy, 4 Girl)
+// Girl Card 1 SAME winning pattern: B9, I27, N34, G54, O72
+const bingoCards8 = {
+    boy1: {
+        B: [1, 7, 12, 15, 3],
+        I: [18, 22, 28, 30, 24],
+        N: [33, 35, "FREE", 44, 38],
+        G: [47, 52, 58, 60, 55],
+        O: [62, 67, 73, 75, 70]
+    },
+    boy2: {
+        B: [2, 8, 13, 14, 6],
+        I: [17, 23, 29, 25, 19],
+        N: [32, 36, "FREE", 45, 39],
+        G: [48, 53, 59, 56, 51],
+        O: [63, 71, 74, 69, 65]
+    },
+    boy3: {
+        B: [6, 13, 5, 8, 15],
+        I: [20, 26, 18, 29, 17],
+        N: [40, 32, "FREE", 38, 44],
+        G: [51, 49, 58, 53, 47],
+        O: [65, 71, 62, 69, 75]
+    },
+	boy4: {
+        B: [4, 11, 10, 1, 14],
+        I: [19, 24, 16, 23, 28],
+        N: [41, 43, "FREE", 33, 31],
+        G: [50, 57, 46, 61, 48],
+        O: [66, 68, 70, 74, 63]
+    },
+    girl1: {
+        B: [5, 9, 4, 10, 11],
+        I: [16, 27, 20, 26, 21],
+        N: [31, 34, "FREE", 37, 42],
+        G: [46, 54, 57, 50, 49],
+        O: [61, 72, 68, 66, 64]
+    },
+    girl2: {
+        B: [15, 12, 7, 3, 1],
+        I: [30, 18, 25, 22, 24],
+        N: [38, 44, "FREE", 35, 40],
+        G: [60, 55, 52, 58, 47],
+        O: [75, 70, 67, 73, 62]
+    },
+    girl3: {
+        B: [3, 2, 14, 12, 6],
+        I: [25, 19, 30, 17, 22],
+        N: [36, 39, "FREE", 41, 35],
+        G: [59, 48, 51, 55, 60],
+        O: [64, 66, 75, 61, 67]
+    },
+    girl4: {
+        B: [7, 1, 13, 8, 4],
+        I: [21, 28, 24, 18, 16],
+        N: [37, 40, "FREE", 43, 32],
+        G: [52, 56, 49, 47, 53],
+        O: [68, 63, 74, 65, 70]
+    }
+};
+
 // HARDCODED RIGGED SEQUENCE - EXTREMELY CAREFULLY VERIFIED
 // Girl Card 1 will win with second row: B9, I27, N34, G54, O72
 // 
@@ -40,7 +101,6 @@ const bingoCards = {
 // Girl1: B[5,9,4,10,11], I[16,27,20,26,21], N[31,34,FREE,37,42], G[46,54,57,50,49], O[61,72,68,66,64] (WINNER - second row)
 // Girl2: B[15,12,7,3,1], I[30,18,25,22,24], N[38,44,FREE,35,40], G[60,55,52,58,47], O[75,70,67,73,62]
 //
-// STRATEGY: Give each wrong card maximum 2 numbers from any winning pattern to create excitement but prevent wins
 // SEQUENCE LENGTH: ~30 numbers total - creates longer, more engaging game
 const riggedSequence = [
     // Safe numbers that don't create patterns
@@ -73,6 +133,59 @@ const riggedSequence = [
     'O64',   // Girl1 only - safe
     'O72'    // Girl1 WINNING #5 (second row) - GIRL1 WINS!
 ];
+
+// 8-Card Rigged Sequence - Extended for 8 cards (32 numbers)
+// Girl Card 1 SAME winning pattern: B9, I27, N34, G54, O72
+//
+// STRATEGY: Ultra-safe numbers that prevent any wrong card from getting more than 2 in any pattern
+const riggedSequence8 = [
+    // Safe opening numbers
+    'I17',
+    'G60',
+    'B4',
+    'B6',
+    'O66',
+    'B2',
+    'I19',
+	'O74',
+    'G54',   // Girl1 WINNING #1 (second row)
+    'N31',
+    'O75',
+    'B9',    // Girl1 WINNING #2 (second row)
+    'I18',
+    'O63',
+    'N36',
+    'I27',   // Girl1 WINNING #3 (second row)
+    'G47',
+    'G51',
+    'B5',
+    'O71',
+    'B3',
+    'I21',
+    'O69',
+    'I22',
+    'G49',
+	'O62',
+    'B1',
+    'N40',
+    'N34',   // Girl1 WINNING #4 (second row)
+    'G52',
+    'O64',
+    'O72'    // Girl1 WINNING #5 (second row) - GIRL1 WINS!
+];
+
+// Detect card mode from URL parameter
+const urlParams = new URLSearchParams(window.location.search);
+const cardMode = urlParams.get('cards') === '8' ? '8' : '4';
+
+// Get active card set and sequence based on mode
+function getActiveCards() {
+    return cardMode === '8' ? bingoCards8 : bingoCards;
+}
+
+function getActiveSequence() {
+    return cardMode === '8' ? riggedSequence8 : riggedSequence;
+}
 
 // Game state
 let gameState = {
@@ -292,11 +405,12 @@ function drawNumber() {
         return;
     }
 
-    if (gameState.gameEnded || gameState.currentIndex >= riggedSequence.length) {
+    const activeSequence = getActiveSequence();
+    if (gameState.gameEnded || gameState.currentIndex >= activeSequence.length) {
         return;
     }
 
-    const numberCall = riggedSequence[gameState.currentIndex];
+    const numberCall = activeSequence[gameState.currentIndex];
     const letter = numberCall[0];
     const number = numberCall.substring(1);
     
@@ -350,8 +464,9 @@ function updateCalledNumbersList() {
 
 // Check if any card has won
 function checkForWinner() {
-    Object.keys(bingoCards).forEach(cardKey => {
-        if (checkCardForWin(bingoCards[cardKey], cardKey)) {
+    const activeCards = getActiveCards();
+    Object.keys(activeCards).forEach(cardKey => {
+        if (checkCardForWin(activeCards[cardKey], cardKey)) {
             if (cardKey === 'girl1' && !gameState.bingoDetected) {
                 // Detect bingo but don't show winner yet
                 gameState.bingoDetected = true;
@@ -473,17 +588,41 @@ function hideBallPickOverlay() {
 
 // Initialize dev mode
 function initializeDevMode() {
-    const cardKeys = ['boy1', 'boy2', 'girl1', 'girl2'];
+    const cardsGrid = document.querySelector('.cards-grid');
+    const cardKeys = cardMode === '8' 
+        ? ['boy1', 'boy2', 'boy3', 'boy4', 'girl1', 'girl2', 'girl3', 'girl4']
+        : ['boy1', 'boy2', 'girl1', 'girl2'];
     
+    // Clear existing cards
+    cardsGrid.innerHTML = '';
+    
+    // Create containers and cards dynamically
     cardKeys.forEach(cardKey => {
-        createCardDisplay(cardKey, `${cardKey.replace(/(\d)/, '-card-$1')}`);
+        const cardContainer = document.createElement('div');
+        cardContainer.className = 'card-container';
+        
+        const title = document.createElement('h3');
+        const cardNum = cardKey.match(/\d+/)[0];
+        const cardType = cardKey.includes('boy') ? 'Boy' : 'Girl';
+        title.textContent = `${cardType} Card ${cardNum}${cardKey === 'girl1' ? ' (Winner)' : ''}`;
+        
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'bingo-card';
+        cardDiv.id = `${cardKey.replace(/(\d)/, '-card-$1')}`;
+        
+        cardContainer.appendChild(title);
+        cardContainer.appendChild(cardDiv);
+        cardsGrid.appendChild(cardContainer);
+        
+        createCardDisplay(cardKey, cardDiv.id);
     });
 }
 
 // Create a card display for dev mode
 function createCardDisplay(cardKey, containerId) {
     const container = document.getElementById(containerId);
-    const card = bingoCards[cardKey];
+    const activeCards = getActiveCards();
+    const card = activeCards[cardKey];
     const columns = ['B', 'I', 'N', 'G', 'O'];
     
     container.innerHTML = '';
@@ -518,8 +657,9 @@ function createCardDisplay(cardKey, containerId) {
 // Update dev mode displays
 function updateDevMode() {
     // Update card markings
-    Object.keys(bingoCards).forEach(cardKey => {
-        const card = bingoCards[cardKey];
+    const activeCards = getActiveCards();
+    Object.keys(activeCards).forEach(cardKey => {
+        const card = activeCards[cardKey];
         const columns = ['B', 'I', 'N', 'G', 'O'];
         
         columns.forEach(letter => {
@@ -537,22 +677,42 @@ function updateDevMode() {
 
 // Initialize print views
 function initializePrintViews() {
-    const cardMappings = {
-        'print-boy-card-1': 'boy1',
-        'print-boy-card-2': 'boy2', 
-        'print-girl-card-1': 'girl1',
-        'print-girl-card-2': 'girl2'
-    };
+    const printContainer = document.querySelector('.print-container');
+    const cardKeys = cardMode === '8' 
+        ? ['boy1', 'boy2', 'boy3', 'boy4', 'girl1', 'girl2', 'girl3', 'girl4']
+        : ['boy1', 'boy2', 'girl1', 'girl2'];
     
-    Object.keys(cardMappings).forEach(printId => {
-        createPrintCard(cardMappings[printId], printId);
+    // Clear existing print pages
+    printContainer.innerHTML = '';
+    
+    // Create print pages dynamically
+    cardKeys.forEach(cardKey => {
+        const printPage = document.createElement('div');
+        printPage.className = 'print-page';
+        printPage.id = `print-${cardKey.replace(/(\d)/, '-$1')}`;
+        
+        const title = document.createElement('h2');
+        const cardNum = cardKey.match(/\d+/)[0];
+        const cardType = cardKey.includes('boy') ? 'BOY' : 'GIRL';
+        title.textContent = `${cardType} BINGO CARD #${cardNum}`;
+        
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'print-bingo-card';
+        cardDiv.id = `print-${cardKey.replace(/(\d)/, '-card-$1')}`;
+        
+        printPage.appendChild(title);
+        printPage.appendChild(cardDiv);
+        printContainer.appendChild(printPage);
+        
+        createPrintCard(cardKey, cardDiv.id);
     });
 }
 
 // Create a print-friendly card
 function createPrintCard(cardKey, containerId) {
     const container = document.getElementById(containerId);
-    const card = bingoCards[cardKey];
+    const activeCards = getActiveCards();
+    const card = activeCards[cardKey];
     const columns = ['B', 'I', 'N', 'G', 'O'];
     
     container.innerHTML = '';
