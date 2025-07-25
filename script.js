@@ -306,6 +306,9 @@ function drawNumber() {
     // Save game state after each number draw
     saveGameState();
 
+    // Show ball pick overlay
+    showBallPickOverlay(letter, number);
+
     // Update current ball display
     document.getElementById('ball-number').textContent = number;
     document.getElementById('ball-letter').textContent = letter;
@@ -426,6 +429,46 @@ function showWinner(cardKey) {
 function closeWinnerAnnouncement() {
     const winnerAnnouncement = document.getElementById('winner-announcement');
     winnerAnnouncement.style.display = 'none';
+}
+
+// Show ball pick overlay with fade-in-zoom-in animation
+function showBallPickOverlay(letter, number) {
+    const overlay = document.getElementById('ball-pick-overlay');
+    const overlayLetter = document.getElementById('overlay-ball-letter');
+    const overlayNumber = document.getElementById('overlay-ball-number');
+    
+    // Set the ball content
+    overlayLetter.textContent = letter;
+    overlayNumber.textContent = number;
+    
+    // Show overlay with fade-in-zoom-in animation
+    overlay.style.display = 'flex';
+    
+    // Force a reflow to ensure display change takes effect
+    overlay.offsetHeight;
+    
+    // Add show class to trigger animation
+    overlay.classList.add('show');
+    overlay.classList.remove('hide');
+    
+    // Hide overlay after 2 seconds with fade-out-zoom-out animation
+    setTimeout(() => {
+        hideBallPickOverlay();
+    }, 2000);
+}
+
+// Hide ball pick overlay with fade-out-zoom-out animation
+function hideBallPickOverlay() {
+    const overlay = document.getElementById('ball-pick-overlay');
+    
+    // Add hide class to trigger fade-out-zoom-out animation
+    overlay.classList.add('hide');
+    overlay.classList.remove('show');
+    
+    // Actually hide the overlay after animation completes (0.3s)
+    setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 300);
 }
 
 // Initialize dev mode
